@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Input from '../../components/Inputs/Input'
 import ProfilePhotoSelector from '../../components/Inputs/ProfilePhotoSelector'
 import { validateEmail } from '../../utils/helper'
+import { UserContext } from '../../context/userContext'
+import axiosInstance from '../../utils/axiosInstance'
+import { API_PATHS } from '../../utils/apiPath'
+import uploadImage from '../../utils/uploadImage'
 
 const SignUp = ({setCurrentPage}) => {
   const [profilePic, setProfilePic] = useState(null)
@@ -11,6 +15,7 @@ const SignUp = ({setCurrentPage}) => {
   const [password, setPassword] = useState("")
 
   const [error,setError] = useState(null);
+  const {updateUser} = useContext(UserContext)
   const navigate = useNavigate()
 
   // Handle signup form submit 
@@ -38,7 +43,25 @@ const SignUp = ({setCurrentPage}) => {
 
     //SignUp api call //
     try {
-      
+      if(profilePic){
+        const imageUploadRes = await uploadImage(profilePic)
+        profileImageUrl = imageUploadRes.imageUrl || "";
+        }
+
+        const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
+          name:fullName,
+          email,
+          password,
+          profileImageUrl
+        });
+        const {token} = response.data;
+
+        if(token){
+          localStorage.setItem("token", token);
+          updateUser(response.data);
+          navigate("/dashboard")
+        }
+
     } catch (error) {
       if(error.response && error.response.data.message){
         setError(error.response.data.message)
@@ -59,7 +82,7 @@ const SignUp = ({setCurrentPage}) => {
         <div className='grid grid-cols-1 md:grid-cols-1 gap-2'>
           <Input
           value={fullName}
-          onChange={({target})=>setFullName((target.value))}
+          onChange={({target}) => setFullName(target.value)}
           label="Full Name"          
           placeholder="John"
           type="text"
@@ -67,7 +90,7 @@ const SignUp = ({setCurrentPage}) => {
 
 <Input
           value={email}
-          onChange={({target})=>setEmail((target.value))}
+          onChange={({target})=>setEmail(target.value)}
           label="Email Address"          
           placeholder="John@gmail.com"
           type="email"
@@ -75,7 +98,7 @@ const SignUp = ({setCurrentPage}) => {
 
 <Input
           value={password}
-          onChange={({target})=>setPassword((target.value))}
+          onChange={({target})=>setPassword(target.value)}
           label="Password"          
           placeholder="Min 8 Character"
           type="password"
