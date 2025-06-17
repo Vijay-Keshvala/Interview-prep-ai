@@ -2,10 +2,13 @@ import React from 'react'
 
 const SpinnerLoader = () => {
   return (
-    <div role="status" className="flex items-center justify-center">
+    <div
+      role="status"
+      className="flex items-center justify-center bg-transparent"
+    >
       <svg
         aria-hidden="true"
-        className="w-6 h-6 text-gray-200 animate-spin fill-blue-500"
+        className="w-6 h-6 text-black animate-spin fill-white"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +40,7 @@ const SpinnerLoader = () => {
              32.2913 88.1811 35.8758C89.083 
              38.2158 91.5421 39.6781 93.9676 
              39.0409Z"
-          fill="currentFill"
+          // fill="currentFill"
         />
       </svg>
       <span className="sr-only">Loading...</span>

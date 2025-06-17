@@ -5,38 +5,45 @@ const Session = require("../models/Session")
 // @route POST /api/question/add
 // @access Private
 
-exports.addQuestionToSession =async(req,res)=>{
+exports.addQuestionToSession = async (req, res) => {
     try {
-        const {sessionId, questions} = req.body;
-
-        if(!sessionId || !questions || !Array.isArray(questions)){
-            return res.status(400).json({message:"Invalid input data"})
-        }
-
-        const session = await Session.findById(sessionId);
-
-        if(!session){
-            return res.status(404).json({message:"Session not found"})
-        }
-
-        // Create new Questions 
-
-        const createdQuestions = await Question.insertMany(
-            questions.map((q)=>({
-                session:sessionId,
-                question:q.question,
-                answer:q.answer,
-            }))
-        );
-
-        // Update session to include new question IDs
-        session.questions.push(...createdQuestions.map((q)=>q._id))
-        await session.save();
-
+      const { sessionId, questions } = req.body;
+  
+      if (!sessionId || !questions || !Array.isArray(questions)) {
+        return res.status(400).json({ message: "Invalid input data" });
+      }
+  
+      const session = await Session.findById(sessionId);
+  
+      if (!session) {
+        return res.status(404).json({ message: "Session not found" });
+      }
+  
+      // Create new questions
+      const createdQuestions = await Question.insertMany(
+        questions.map((q) => ({
+          session: sessionId,
+          question: q.question,
+          answer: q.answer,
+        }))
+      );
+  
+      // Add question IDs to session
+      session.questions.push(...createdQuestions.map((q) => q._id));
+      await session.save();
+  
+      // ✅ Send response
+      return res.status(201).json({
+        success: true,
+        message: "Questions added successfully",
+        questions: createdQuestions,
+      });
     } catch (error) {
-        res.status(500).json({message:"Server Error"})
+      console.error("❌ Error in addQuestionToSession:", error);
+      res.status(500).json({ message: "Server Error" });
     }
-};
+  };
+  
 
 // @desc Pin or unpin a question
 // @route POST /api/question/:id/pin

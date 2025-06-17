@@ -5,7 +5,8 @@ const Question = require("../models/Question")
 // @route POST /api/sessions/create
 // @access Private
 
-exports.createSession = async(req,res)=>{
+exports.
+createSession = async(req,res)=>{
     try {
         const {role,experience,topicsToFocus,description,questions} = req.body
         const userId = req.user._id;
@@ -105,3 +106,4 @@ exports.deleteSession = async(req,res)=>{
         res.status(500).json({message:false,message:"Server error"});
     }
 }
+

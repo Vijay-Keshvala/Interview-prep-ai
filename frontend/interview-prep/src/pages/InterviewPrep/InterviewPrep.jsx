@@ -7,22 +7,23 @@ import { API_PATHS } from '../../utils/apiPath';
 import moment from "moment"
 import { motion, AnimatePresence } from 'framer-motion' // <-- add this import
 import QuestionCard from '../../components/Cards/QuestionCard';
-import { LuCircleAlert } from 'react-icons/lu';
+import { LuCircleAlert, LuListCollapse } from 'react-icons/lu';
 import AIResponsePreview from './components/AIResponsePreview';
 import Drawer from '../../components/Drawer';
 import SkeletonLoader from '../../components/Loader/SkeletonLoader';
+import SpinnerLoader from '../../components/Loader/SpinnerLoader';
 const InterviewPrep = () => {
 
   const {sessionId} = useParams();
 
-  const [sessionData, setSessionData] = useState("")
+  const [sessionData, setSessionData] = useState({})
   const [errorMsg,setErrorMsg] = useState("");
 
   const [openLeanMoreDrawer,setOpenLeanMoreDrawer] = useState(false)
   const [explanation,setExplanation] = useState(null)
 
   const [isLoading,setIsLoading] = useState(false)
-  const [isUpdateLoader,setUpdateLoader] = useState(false)
+  const [isUpdateLoader,setIsUpdateLoader] = useState(false)
 
   //Fetch session data by session id
   const fetchSessionDetailsById = async ()=>{
@@ -84,8 +85,42 @@ const InterviewPrep = () => {
   }
 
   //Add more question to session 
-  const uploadMoreQuestion = async()=>{}
-
+  const uploadMoreQuestion = async () => {
+    try {
+      setIsUpdateLoader(true);
+  
+      const aiResponse = await axiosInstance.post(API_PATHS.AI.GENERATE_QUESTIONS, {
+        role: sessionData?.role,
+        experience: sessionData?.experience,
+        topicsToFocus: sessionData?.topicsToFocus,
+        numberOfQuestions: 10,
+      });
+  
+      const generatedQuestions = aiResponse.data;
+  
+      const response = await axiosInstance.post(API_PATHS.QUESTION.ADD_TO_SESSION, {
+        sessionId,
+        questions: generatedQuestions,
+      });
+  
+      if (response.data && response.data.questions) {
+        setSessionData((prev) => ({
+          ...prev,
+          questions: [...prev.questions, ...response.data.questions],
+        }));
+      }
+  
+    } catch (error) {
+      if (error.response?.data?.message) {
+        setErrorMsg(error.response.data.message);
+      } else {
+        console.error("Something went wrong", error);
+      }
+    } finally {
+      setIsUpdateLoader(false);
+    }
+  };
+  
   useEffect(()=>{
     if(sessionId){
       fetchSessionDetailsById()
@@ -144,6 +179,25 @@ const InterviewPrep = () => {
                   isPinned={data?.isPinned}
                   onTogglePin={()=>toggleQuestionPinStatus(data._id)}
                   />
+                  {!isLoading &&
+                  sessionData?.questions?.length == index + 1 && (
+                    <div className='flex items-center justify-center mt-5'>
+                      <button
+                      className='flex items-center gap-3 text-sm text-white font-medium bg-black px-5 py-2 mr-2 rounded text-nowrap cursor-pointer '
+                      disabled={isLoading || isUpdateLoader}
+                      onClick={uploadMoreQuestion}
+                      >
+                        {isUpdateLoader ? (
+                          <SpinnerLoader/>
+                        ) : (
+                          <LuListCollapse className='text-lg' />
+                        )
+                      } {" "}
+                      Load More
+                      </button>
+                    </div>
+                  )
+                  }
                   </>
                 </motion.div>
               );
