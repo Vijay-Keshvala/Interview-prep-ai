@@ -7,6 +7,10 @@ import { API_PATHS } from '../../utils/apiPath';
 import moment from "moment"
 import { motion, AnimatePresence } from 'framer-motion' // <-- add this import
 import QuestionCard from '../../components/Cards/QuestionCard';
+import { LuCircleAlert } from 'react-icons/lu';
+import AIResponsePreview from './components/AIResponsePreview';
+import Drawer from '../../components/Drawer';
+import SkeletonLoader from '../../components/Loader/SkeletonLoader';
 const InterviewPrep = () => {
 
   const {sessionId} = useParams();
@@ -33,7 +37,36 @@ const InterviewPrep = () => {
   }
 
   //Generate concept explanation 
-  const generateConceptExplanation = async (question)=>{}
+  const generateConceptExplanation = async (question) => {
+    try {
+      setErrorMsg("");
+      setExplanation(null);
+      setIsLoading(true);
+      setOpenLeanMoreDrawer(true);
+  
+      const response = await axiosInstance.post(
+        API_PATHS.AI.GENERATE_EXPLANATION,
+        { question }
+      );
+  
+      // ✅ Fix: Extract from correct keys
+      if (response.data && response.data.title && response.data.answer) {
+        setExplanation({
+          title: response.data.title,
+          explanation: response.data.answer, // use 'answer' here
+        });
+      } else {
+        setErrorMsg("Invalid response structure.");
+      }
+  
+    } catch (error) {
+      setErrorMsg("Failed to generate explanation. Please try again later.");
+      console.log("Error in explanation generation:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
 
   //Pin question 
   const toggleQuestionPinStatus = async(questionId)=>{
@@ -117,6 +150,26 @@ const InterviewPrep = () => {
             })};
           </AnimatePresence>
         </div>
+      </div>
+      <div>
+      <Drawer
+  isOpen={openLeanMoreDrawer}
+  onClose={() => setOpenLeanMoreDrawer(false)}
+  title={!isLoading && explanation?.title}
+>
+  {errorMsg && (
+    <p className='flex gap-2 text-sm text-amber-600 font-medium'>
+      <LuCircleAlert /> {errorMsg}
+    </p>
+  )}
+
+  {isLoading && <SkeletonLoader />}
+
+  {!isLoading && explanation && (
+    <AIResponsePreview content={explanation.explanation} />
+  )}
+</Drawer>
+
       </div>
      </div>
     </DashboardLayout>
