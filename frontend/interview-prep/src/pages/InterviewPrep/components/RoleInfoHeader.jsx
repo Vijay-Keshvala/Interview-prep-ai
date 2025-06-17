@@ -4,7 +4,7 @@ const RoleInfoHeader = ({
     role,
     topicsToFocus,
     experience,
-    question,
+    questions,
     description,
     lastUpdate
 }) => {
@@ -27,7 +27,7 @@ const RoleInfoHeader = ({
                             Experience: {experience} {experience === 1 ? "Year" : "Years"}
                         </div>
                         <div className='text-[10px] font-semibold text-white bg-black px-3 py-1 rounded-full'>
-                            {question} Q&A
+                            {questions} Q&A
                         </div>
                         <div className='text-[10px] font-semibold text-white bg-black px-3 py-1 rounded-full'>
                             Last Updated: {lastUpdate}
