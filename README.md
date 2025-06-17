@@ -1,47 +1,49 @@
 # Interview Prep AI 🎯
 
-AI-powered platform to help users practice for technical interviews. It offers real-time Q&A sessions, topic-based interview preparation, and personalized experiences using Google Generative AI.
+**AI-powered platform to help users practice for technical interviews.**  
+Offers real-time Q&A sessions, topic-based preparation, and personalized learning using Google Generative AI.
 
 ---
 
 ## 🧠 Features
 
-- ✍️ Interactive interview sessions powered by GenAI  
-- 📚 Topic-focused interview preparation  
-- 🧩 Syntax-highlighted markdown for code questions  
-- 🎥 Animated and responsive UI with Framer Motion  
-- 🔐 JWT-based user authentication  
-- 📁 Profile picture upload (Multer)  
-- 🌐 Fully RESTful backend API with Express + MongoDB  
+- ✍️ GenAI-powered interview sessions  
+- 📚 Topic-based practice questions  
+- 🧩 Syntax-highlighted markdown for code  
+- 🎥 Animated & responsive UI (Framer Motion)  
+- 🔐 JWT-based authentication  
+- 📁 Profile photo upload with Multer  
+- 🌐 RESTful API using Express + MongoDB  
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React 19
-- React Router DOM 7
-- Tailwind CSS 4
-- Framer Motion
-- React Icons, Lucide React
-- React Markdown & Syntax Highlighter
-- Axios
+- ⚛️ React 19
+- 🌐 React Router DOM 7
+- 🎨 Tailwind CSS 4
+- 🌀 Framer Motion
+- 🧱 Lucide React & React Icons
+- 📘 React Markdown + Syntax Highlighter
+- 🔗 Axios
 
 ### Backend
-- Node.js + Express
-- MongoDB + Mongoose
-- JWT (Authentication)
-- Multer (Image Uploads)
-- Google GenAI SDK (`@google/genai`)
-- Dotenv for environment variables
+- 🟢 Node.js + Express
+- 🍃 MongoDB + Mongoose
+- 🔐 JWT Auth
+- 🖼️ Multer (image uploads)
+- 🤖 Google GenAI SDK (`@google/genai`)
+- ⚙️ dotenv for env management
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js & npm
-- MongoDB Atlas or local MongoDB instance
+- MongoDB Atlas or Local MongoDB
 - Google GenAI API Key
 
 ---
@@ -49,38 +51,42 @@ AI-powered platform to help users practice for technical interviews. It offers r
 ### 🔧 Installation
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/Vijay-Keshvala/Interview-prep-ai.git
 cd Interview-prep-ai
+```
 
+### 📦 Setup Frontend
 
-📦 Setup Frontend
-bash
-Copy
-Edit
+```bash
 cd client
 npm install
 npm run dev
-🛠️ Setup Backend
-bash
-Copy
-Edit
+```
+
+### 🛠️ Setup Backend
+
+```bash
 cd backend
 npm install
-# Create a .env file in /backend
+# Create a .env file
 npm run dev
-.env Example
-env
-Copy
-Edit
+```
+
+#### ✅ .env Example
+
+```env
 PORT=5000
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/interviewPrep
 JWT_SECRET=your_jwt_secret
 GOOGLE_API_KEY=your_genai_key
-📁 Folder Structure
-bash
-Copy
-Edit
+```
+
+---
+
+## 📁 Folder Structure
+
+```
 Interview-prep-ai/
 │
 ├── client/               # React Frontend
@@ -92,26 +98,26 @@ Interview-prep-ai/
 │   ├── routes/
 │   ├── models/
 │   └── controllers/
-✨ Acknowledgements
-Google Generative AI SDK
-
-Tailwind CSS
-
-Framer Motion
-
-React Markdown
-
-📜 License
-This project is licensed under the MIT License.
-
-👤 Author
-Vijay Keshvala
-GitHub • LinkedIn
-
-yaml
-Copy
-Edit
+```
 
 ---
 
-Let me know if you want to add badges (e.g., "Made with React", "Build Passing") or an animated project preview section at the top!
+## ✨ Acknowledgements
+
+- [Google GenAI SDK](https://www.npmjs.com/package/@google/genai)  
+- [Tailwind CSS](https://tailwindcss.com)  
+- [Framer Motion](https://www.framer.com/motion/)  
+- [React Markdown](https://github.com/remarkjs/react-markdown)
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 👤 Author
+
+**Vijay Keshvala**  
+[GitHub](https://github.com/Vijay-Keshvala) • [LinkedIn](https://linkedin.com/in/vijay-keshvala)
