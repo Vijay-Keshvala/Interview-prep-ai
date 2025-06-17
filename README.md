@@ -59,7 +59,6 @@ cd Interview-prep-ai
 ### 📦 Setup Frontend
 
 ```bash
-cd client
 npm install
 npm run dev
 ```
@@ -120,4 +119,4 @@ This project is licensed under the MIT License.
 ## 👤 Author
 
 **Vijay Keshvala**  
-[GitHub](https://github.com/Vijay-Keshvala) • [LinkedIn](https://linkedin.com/in/vijay-keshvala)
+[GitHub](https://github.com/Vijay-Keshvala) • [LinkedIn](www.linkedin.com/in/keshvala-vijay-17ba6a327)
