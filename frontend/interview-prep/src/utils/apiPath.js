@@ -1,9 +1,10 @@
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "http://localhost:8000"; // ✅ backend port
 export const API_PATHS = {
     AUTH: {
         REGISTER: "/api/auth/register", // Signup
         LOGIN: "/api/auth/login", // Authenticate user & return JWT token GET_PROFILE: "/api/auth/profile", // Get logged-in user details
-        GET_PROFILE: "/api/auth/profile"
+        GET_PROFILE: "/api/auth/profile",
+        UPDATE_PROFILE: "/api/auth/profile", // 👈 use this for PUT/PATCH
     },
     IMAGE: {
         UPLOAD_IMAGE: "/api/auth/upload-image", // Upload profile picture
@@ -19,10 +20,10 @@ export const API_PATHS = {
         GET_ONE: (id) => `/api/sessions/${id}`, // Get session details with questions DELETE: (id) => `/api/sessions/${id}`, // Delete a session
         DELETE: (id) => `/api/sessions/${id}`, // Delete id
     },
-        QUESTION: {
-            ADD_TO_SESSION: "/api/questions/add", // Add more questions to a session
-            PIN: (id) => `/api/questions/${id}/pin`, // Pin or Unpin a question
-            UPDATE_NOTE: (id) => `/api/questions/${id}/note`, // Update/Add a note to a question
-        },
-    
+    QUESTION: {
+        ADD_TO_SESSION: "/api/questions/add", // Add more questions to a session
+        PIN: (id) => `/api/questions/${id}/pin`, // Pin or Unpin a question
+        UPDATE_NOTE: (id) => `/api/questions/${id}/note`, // Update/Add a note to a question
+    },
+
 };
